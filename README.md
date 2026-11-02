@@ -17,7 +17,9 @@ This case study was carried out under the academic guidance of Dr. A. Baskar and
 **Quick links:** [One-page write-up](docs/one-page-writeup.md) ([PDF](docs/one-page-writeup.pdf)) · [System overview diagram](docs/images/system_overview.svg)
 
 ![System overview](docs/images/system_overview.png)
-![Video-Link](https://drive.google.com/drive/folders/1awMBn8Rxh1Ucm2EdHyosRDH7NANug61b?usp=sharing)
+
+
+[Video-Link](https://drive.google.com/drive/folders/1awMBn8Rxh1Ucm2EdHyosRDH7NANug61b?usp=sharing)
 
 ---
 
