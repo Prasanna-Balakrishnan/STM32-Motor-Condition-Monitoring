@@ -1,0 +1,22 @@
+MDK-ARM/PROJECT_MONITERING/
+MDK-ARM/Objects/
+MDK-ARM/Listings/
+MDK-ARM/DebugConfig/
+MDK-ARM/RTE/
+*.axf
+*.o
+*.d
+*.crf
+*.lst
+*.map
+*.htm
+*.hex
+*.bin
+*.elf
+*.build_log.htm
+*.dep
+*.uvguix.*
+
+# Secrets
+.env
+*.env

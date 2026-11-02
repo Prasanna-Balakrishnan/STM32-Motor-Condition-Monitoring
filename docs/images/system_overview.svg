@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#334155"/></marker>
+    <style>
+      .t{font-size:15px;fill:#0f172a}.s{font-size:12px;fill:#475569}.h{font-size:13px;font-weight:700;fill:#334155;letter-spacing:1px}
+      .box{fill:#fff;stroke:#334155;stroke-width:1.6}
+      .in{fill:#e0f2fe;stroke:#0369a1;stroke-width:1.6}
+      .mcu{fill:#f1f5f9;stroke:#334155;stroke-width:1.6}
+      .dec{fill:#fef3c7;stroke:#b45309;stroke-width:1.6}
+      .out{fill:#dcfce7;stroke:#15803d;stroke-width:1.6}
+      .ln{stroke:#334155;stroke-width:1.6;fill:none;marker-end:url(#a)}
+      .dash{stroke:#64748b;stroke-width:1.4;fill:none;stroke-dasharray:6 4;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1200" height="640" fill="#fff"/>
+  <text x="600" y="32" text-anchor="middle" style="font-size:20px;font-weight:700;fill:#0f172a">Edge Acoustic &amp; Vibration Condition Monitor — STM32F411CEU6</text>
+
+  <!-- column headers -->
+  <text x="110" y="70" class="h" text-anchor="middle">SENSE</text>
+  <text x="400" y="70" class="h" text-anchor="middle">ACQUIRE</text>
+  <text x="720" y="70" class="h" text-anchor="middle">PROCESS &amp; DECIDE (on-chip)</text>
+  <text x="1060" y="70" class="h" text-anchor="middle">ACT / REPORT</text>
+
+  <rect x="30" y="120" width="160" height="70" rx="12" class="in"/>
+  <text x="110" y="150" text-anchor="middle" class="t">MPU6050</text>
+  <text x="110" y="170" text-anchor="middle" class="s">3-axis accel, ±4 g</text>
+  <rect x="30" y="240" width="160" height="70" rx="12" class="mcu"/>
+  <text x="110" y="270" text-anchor="middle" class="t">DC motor 6/12 V</text>
+  <text x="110" y="290" text-anchor="middle" class="s">machine under test</text>
+  <rect x="30" y="360" width="160" height="70" rx="12" class="in"/>
+  <text x="110" y="390" text-anchor="middle" class="t">INMP441</text>
+  <text x="110" y="410" text-anchor="middle" class="s">24-bit I2S MEMS mic</text>
+  <path class="dash" d="M110 240 V192"/>
+  <path class="dash" d="M110 310 V358"/>
+  <text x="122" y="222" class="s">vibration</text>
+  <text x="122" y="340" class="s">sound</text>
+
+  <rect x="300" y="110" width="200" height="90" rx="12" class="mcu"/>
+  <text x="400" y="138" text-anchor="middle" class="t">I2C1 @ 400 kHz</text>
+  <text x="400" y="158" text-anchor="middle" class="s">TIM3 tick → 1 kHz samples</text>
+  <text x="400" y="176" text-anchor="middle" class="s">512-sample window (0.512 s)</text>
+  <rect x="300" y="350" width="200" height="90" rx="12" class="mcu"/>
+  <text x="400" y="378" text-anchor="middle" class="t">I2S2 + DMA1 (circular)</text>
+  <text x="400" y="398" text-anchor="middle" class="s">16 kHz, 24-bit samples</text>
+  <text x="400" y="416" text-anchor="middle" class="s">last 2048 samples / window</text>
+  <path class="ln" d="M190 155 H298"/>
+  <path class="ln" d="M190 395 H298"/>
+  <text x="244" y="148" text-anchor="middle" class="s">I2C</text>
+  <text x="244" y="388" text-anchor="middle" class="s">I2S</text>
+
+  <rect x="600" y="130" width="240" height="110" rx="12" class="mcu"/>
+  <text x="720" y="158" text-anchor="middle" class="t">DSP (CMSIS-DSP)</text>
+  <text x="720" y="180" text-anchor="middle" class="s">remove DC · Hann window</text>
+  <text x="720" y="198" text-anchor="middle" class="s">RMS · peak · peak-to-peak</text>
+  <text x="720" y="216" text-anchor="middle" class="s">real FFT → dominant freq</text>
+  <path class="ln" d="M500 155 H598"/>
+  <path class="ln" d="M500 395 H550 V215 H598"/>
+
+  <rect x="600" y="290" width="240" height="64" rx="12" class="dec"/>
+  <text x="720" y="316" text-anchor="middle" class="t">Healthy baseline</text>
+  <text x="720" y="336" text-anchor="middle" class="s">20 windows → mean μ, std σ</text>
+  <rect x="600" y="400" width="240" height="100" rx="12" class="dec"/>
+  <text x="720" y="428" text-anchor="middle" class="t">Decision: z = (x − μ) / σ</text>
+  <text x="720" y="452" text-anchor="middle" class="s">|z| &gt; 3 for 3 consecutive windows</text>
+  <text x="720" y="472" text-anchor="middle" class="s">→ ABNORMAL, otherwise NORMAL</text>
+  <path class="ln" d="M720 240 V288"/>
+  <path class="ln" d="M720 354 V398"/>
+
+  <rect x="300" y="450" width="200" height="64" rx="12" class="in"/>
+  <text x="400" y="476" text-anchor="middle" class="t">KEY · HC-05 commands</text>
+  <text x="400" y="496" text-anchor="middle" class="s">EXTI0 / USART1: start, stop, B/M/S</text>
+  <path class="ln" d="M500 482 H598"/>
+
+  <rect x="950" y="100" width="220" height="62" rx="12" class="out"/>
+  <text x="1060" y="126" text-anchor="middle" class="t">SSD1306 OLED</text>
+  <text x="1060" y="146" text-anchor="middle" class="s">state + features (I2C1)</text>
+  <rect x="950" y="190" width="220" height="62" rx="12" class="out"/>
+  <text x="1060" y="216" text-anchor="middle" class="t">Green / Red LED + buzzer</text>
+  <text x="1060" y="236" text-anchor="middle" class="s">GPIO PA6 / PA7 / PA5</text>
+  <rect x="950" y="280" width="220" height="62" rx="12" class="out"/>
+  <text x="1060" y="306" text-anchor="middle" class="t">USB-UART → PC</text>
+  <text x="1060" y="326" text-anchor="middle" class="s">CSV log, 115200 baud</text>
+  <rect x="950" y="370" width="220" height="62" rx="12" class="out"/>
+  <text x="1060" y="396" text-anchor="middle" class="t">HC-05 → phone</text>
+  <text x="1060" y="416" text-anchor="middle" class="s">result + commands, 9600 baud</text>
+  <rect x="950" y="460" width="220" height="62" rx="12" class="out"/>
+  <text x="1060" y="486" text-anchor="middle" class="t">TB6612FNG → motor</text>
+  <text x="1060" y="506" text-anchor="middle" class="s">TIM1 PWM 10 kHz + GPIO</text>
+  <path d="M840 450 H895 M895 131 V491" stroke="#334155" stroke-width="1.6" fill="none"/>
+  <path class="ln" d="M895 131 H948"/>
+  <path class="ln" d="M895 221 H948"/>
+  <path class="ln" d="M895 311 H948"/>
+  <path class="ln" d="M895 401 H948"/>
+  <path class="ln" d="M895 491 H948"/>
+
+  <rect x="30" y="560" width="1140" height="56" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="600" y="584" text-anchor="middle" class="s">Fault signatures — imbalance: higher vibration RMS + stronger 1× peak · loose mounting: 2×/3× harmonics + broadband noise · load change: shifted dominant frequency + audio RMS</text>
+  <text x="600" y="604" text-anchor="middle" class="s">ISRs only set flags / store samples (SysTick, DMA1_Stream3, TIM3, EXTI0, USART1); FFT and decisions run in the main-loop state machine.</text>
+</svg>
